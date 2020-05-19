@@ -5,10 +5,15 @@ function segwit_3_of_4() {
         document.getElementById('3-of-4-key3').value,
         document.getElementById('3-of-4-key4').value
     ].map(hex => Buffer.from(hex, 'hex'));
-    const { address } = bitcoin.payments.p2wsh({
-        redeem: bitcoin.payments.p2ms({ m: 3, pubkeys }),
-    });
-    document.getElementById('result-3-of-4').innerHTML = address;
+    try {
+        const { address } = bitcoin.payments.p2wsh({
+            redeem: bitcoin.payments.p2ms({ m: 3, pubkeys }),
+        });
+        document.getElementById('result-3-of-4').innerHTML = address;
+    } catch (err) {
+        document.getElementById('result-3-of-4').innerHTML = "Invalid public key...";
+    }
+    
 }
 
 function p2sh_2_of_2() {
@@ -16,12 +21,17 @@ function p2sh_2_of_2() {
         document.getElementById('2-of-2-key1').value,
         document.getElementById('2-of-2-key2').value
     ].map(hex => Buffer.from(hex, 'hex'));
-    const { address } = bitcoin.payments.p2sh({
-        redeem: bitcoin.payments.p2wsh({
-          redeem: bitcoin.payments.p2ms({ m: 2, pubkeys }),
-        }),
-      });
-    document.getElementById('result-2-of-2').innerHTML = address;
+    try {
+        const { address } = bitcoin.payments.p2sh({
+            redeem: bitcoin.payments.p2wsh({
+              redeem: bitcoin.payments.p2ms({ m: 2, pubkeys }),
+            }),
+          });
+        document.getElementById('result-2-of-2').innerHTML = address;
+    } catch (err) {
+        document.getElementById('result-2-of-2').innerHTML = "Invalid public key...";
+    }
+
 }
 
 function p2sh_2_of_3() {
@@ -30,8 +40,13 @@ function p2sh_2_of_3() {
         document.getElementById('2-of-3-key2').value,
         document.getElementById('2-of-3-key3').value
     ].map(hex => Buffer.from(hex, 'hex'));
-    const { address } = bitcoin.payments.p2sh({
-        redeem: bitcoin.payments.p2ms({ m: 2, pubkeys }),
-      });
-    document.getElementById('result-2-of-3').innerHTML = address;
+    try {
+        const { address } = bitcoin.payments.p2sh({
+            redeem: bitcoin.payments.p2ms({ m: 2, pubkeys }),
+          });
+        document.getElementById('result-2-of-3').innerHTML = address;
+    } catch (err) {
+        document.getElementById('result-2-of-3').innerHTML = "Invalid public key...";
+    }
+
 }
